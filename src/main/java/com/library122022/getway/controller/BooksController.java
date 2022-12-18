@@ -27,12 +27,12 @@ public class BooksController {
 //    @GetMapping(path = "")
 //    @RequestMapping(path = "", method = RequestMethod.GET)
     public List<BookEntity> readBooks() {
-        return repository.getAll();
+        return repository.findAll();
     }
 
     @GetMapping(path = "/{id}")
-    public BookEntity readBook(@PathVariable("id") String id) {
-        return repository.getById(id);
+    public BookEntity readBook(@PathVariable("id") Long id) {
+        return repository.findById(id).get();
     }
 
     @SneakyThrows
@@ -42,6 +42,7 @@ public class BooksController {
 //    public BookEntity createBook(@RequestBody BookForm bookForm) {
     public BookEntity createBook(@RequestBody String bookFormString) {
         BookForm bookForm = JsonObjectMapper.jsonObjectMapper().readValue(bookFormString, BookForm.class);
-        return repository.add(bookForm);
+//        return repository.save(bookForm);
+        return null;
     }
 }
