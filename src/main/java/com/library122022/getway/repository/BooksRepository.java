@@ -15,7 +15,8 @@ public class BooksRepository {
     private final Map<String, BookEntity> bookMap = new HashMap<>();
 
     public BookEntity add(BookForm bookForm) {
-        BookEntity bookEntity = BookEntity.builder()
+        BookEntity bookEntity = BookEntity
+                .builder()
                 .id(new Faker().idNumber().valid())
                 .title(bookForm.getTitle())
                 .build();
@@ -24,18 +25,23 @@ public class BooksRepository {
         return bookEntity;
     }
 
-    public BookEntity get(String id) {
+    public BookEntity getById(String id) {
         // TODO - NullPointerException - might return null
         return bookMap.get(id);
     }
 
     public List<BookEntity> getAll() {
-        List<BookEntity> bookList = new ArrayList<>();
+//        List<BookEntity> bookList = new ArrayList<>();
+//
+//        for(Map.Entry<String, BookEntity> entry : bookMap.entrySet()){
+//            bookList.add(entry.getValue());
+//        }
 
-        for(Map.Entry<String, BookEntity> entry : bookMap.entrySet()){
-            bookList.add(entry.getValue());
-        }
+        return bookMap.entrySet().stream()
+                .map(stringBookEntityEntry -> stringBookEntityEntry.getValue())
+                .toList();
 
-        return bookList;
+
+//        return bookList;
     }
 }

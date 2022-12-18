@@ -1,9 +1,12 @@
 package com.library122022.getway.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.library122022.getway.configuration.JsonObjectMapper;
 import com.library122022.getway.repository.BookEntity;
 import com.library122022.getway.repository.BooksRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
+import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,20 +23,25 @@ public class BooksController {
 
     private final BooksRepository repository;
 
-    @GetMapping(path = "")
+    @GetMapping()
+//    @GetMapping(path = "")
+//    @RequestMapping(path = "", method = RequestMethod.GET)
     public List<BookEntity> readBooks() {
         return repository.getAll();
     }
 
     @GetMapping(path = "/{id}")
     public BookEntity readBook(@PathVariable("id") String id) {
-        return repository.get(id);
+        return repository.getById(id);
     }
 
+    @SneakyThrows
     @PostMapping(path = ""
 //            ,consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public BookEntity createBook(@RequestBody BookForm bookForm) {
+//    public BookEntity createBook(@RequestBody BookForm bookForm) {
+    public BookEntity createBook(@RequestBody String bookFormString) {
+        BookForm bookForm = JsonObjectMapper.jsonObjectMapper().readValue(bookFormString, BookForm.class);
         return repository.add(bookForm);
     }
 }

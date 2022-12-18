@@ -28,6 +28,7 @@ public class BookFT {
         Response response = RestAssured.given()
                 .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                 .body(bookForm.toJson())
+                .when()
                 .post(endpointPost);
 
         Assertions.assertEquals(200, response.statusCode());
