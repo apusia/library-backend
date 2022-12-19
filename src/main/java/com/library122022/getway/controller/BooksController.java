@@ -42,7 +42,11 @@ public class BooksController {
 //    public BookEntity createBook(@RequestBody BookForm bookForm) {
     public BookEntity createBook(@RequestBody String bookFormString) {
         BookForm bookForm = JsonObjectMapper.jsonObjectMapper().readValue(bookFormString, BookForm.class);
-//        return repository.save(bookForm);
-        return null;
+
+        BookEntity bookEntity = BookEntity.builder()
+                .title(bookForm.getTitle())
+                .build();
+
+        return repository.save(bookEntity);
     }
 }
