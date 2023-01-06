@@ -19,28 +19,32 @@ public class BookFT {
     private int serverPort;
 
     @Test
-    public void createBook(){
+    public void createBook() {
         String bookTitle = new Faker().book().title();
         BookForm bookForm = new BookForm(bookTitle);
 
         final String endpointPost = "http://localhost:" + serverPort + PATH;
 
-        Response response = RestAssured.given()
+//        Response response =
+        RestAssured.given()
                 .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                 .body(bookForm.toJson())
                 .when()
-                .post(endpointPost);
+                .post(endpointPost)
+                .then()
+                .assertThat()
+                .statusCode(200);
 
-        Assertions.assertEquals(200, response.statusCode());
+//        Assertions.assertEquals(200, response.statusCode());
     }
 
     @Test
-    public void readAllBooks(){
+    public void readAllBooks() {
         final String endpointGet = "http://localhost:" + serverPort + PATH;
 
         Response response = RestAssured.given()
                 .header("Content-Type", "application/json")
-                .header("Accept","application/json")
+                .header("Accept", "application/json")
                 .get(endpointGet);
 
         Assertions.assertEquals(200, response.statusCode());
