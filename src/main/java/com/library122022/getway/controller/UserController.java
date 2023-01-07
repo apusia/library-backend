@@ -5,6 +5,7 @@ import com.library122022.getway.repository.UserEntity;
 import com.library122022.getway.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.hibernate.annotations.Table;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,10 +26,9 @@ public class UserController {
     public List<UserEntity>   // w sumie po co mam odczytywac wszystkich użytkowników
 */
 
-
     @SneakyThrows
-    @PostMapping
-    public UserEntity createUser(@RequestBody String userFormString){
+    @PostMapping(path = "")
+    public UserEntity createUser(@RequestBody String userFormString) {
         UserForm userForm = JsonObjectMapper.jsonObjectMapper().readValue(userFormString, UserForm.class);
 
         UserEntity userEntity = UserEntity.builder()

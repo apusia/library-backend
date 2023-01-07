@@ -1,5 +1,6 @@
 package com.library122022.getway.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.library122022.getway.helper.ToJson;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,12 +11,13 @@ import java.security.SecureRandom;
 
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 public class UserForm implements ToJson {
 
-    private final String name;
-    private final String surname;
+@JsonProperty("new_user")
+    private String name;
+    private String surname;
 
 
 }
